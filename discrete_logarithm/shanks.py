@@ -1,9 +1,8 @@
 import sys
 import os
 import math
-from modulo_arithmetic import multiplicative_inverse
+from utils import multiplicative_inverse
 
-# Add the parent directory to the system path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 def binary_search(arr, target, low, high):
