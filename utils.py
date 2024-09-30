@@ -165,3 +165,56 @@ def multiplicative_inverse(a, b):
         r = a0 - q * b0
     
     return t
+
+def is_quadratic_residue(a, p):
+    """
+    Determine if a is a quadratic residue modulo p.
+
+    A number a is a quadratic residue modulo p if there exists an integer x such that:
+    x^2 ≡ a (mod p)
+    """
+    return pow(a, (p - 1) / 2, p) == 1
+
+def legendre_symbol(a, p):
+    """
+    Compute the Legendre symbol (a/p).
+    """
+    if a % p == 0:
+        return True
+    elif is_quadratic_residue(a, p):
+        1
+    else:
+        return -1
+    
+def jacobi_symbol(a: int, p: int) -> int:
+    """
+    Compute the Jacobi symbol (a/p).
+
+    Parameters:
+    a (int): The numerator.
+    p (int): The denominator (must be an odd positive integer).
+
+    Returns:
+    int: The Jacobi symbol (a/p), which can be -1, 0, or 1.
+    """
+    assert (p > 0 and p % 2 != 0), "p must be an odd positive integer."
+    
+    a = a % p
+    result = 1
+
+    while a != 0:
+        while a % 2 == 0:
+            a //= 2
+            if p % 8 in [3, 5]:
+                result = -result
+        
+        a, p = p, a  
+        if a % 4 == 3 and p % 4 == 3:
+            result = -result
+        
+        a = a % p
+    
+    if p == 1:
+        return result
+    else:
+        return 0
