@@ -1,5 +1,5 @@
 import random
-from utils import jacobi_symbol
+from utils.utils import jacobi_symbol
 
 def is_composite(n):
     """

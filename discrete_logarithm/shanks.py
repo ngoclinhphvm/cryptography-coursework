@@ -1,9 +1,5 @@
-import sys
-import os
 import math
-from utils import multiplicative_inverse
-
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from utils.utils import multiplicative_inverse
 
 def binary_search(arr, target, low, high):
     """
@@ -63,4 +59,6 @@ def log(alpha, beta, n, p):
             i = l2[index_i][0]
             a = (m * j + i) % n
             return a
+
+
 
