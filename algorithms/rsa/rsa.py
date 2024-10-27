@@ -1,7 +1,7 @@
 import random
 from number_theory import prime_generation as pg, modular_arithmetic as ma
 
-def generate_keypair(number_of_bits):
+def generate_keypair(number_of_bits=1024):
     """
     Generate RSA public and private key pair.
     
