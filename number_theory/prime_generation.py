@@ -1,5 +1,5 @@
 import random
-import modular_arithmetic as ma
+from number_theory import modular_arithmetic as ma
 
 def find_k(n):
     """
