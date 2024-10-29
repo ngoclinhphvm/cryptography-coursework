@@ -1,4 +1,4 @@
-from algorithms.rsa.rsa import generate_keypair, encrypt, decrypt
+from algorithms.rsa.rsa import generate_keypair, encrypt, decrypt, sign, verify
 
 def main():    
     # Key generation
@@ -22,6 +22,14 @@ def main():
     
     # Check if message is successfully recovered
     print(f"Message successfully recovered: {encoded_message == decrypted}")
+
+    # Signing
+    signature = sign(encoded_message, private_key)
+    print(f"Signature: {signature}")
+
+    # Verification
+    verified = verify(encoded_message, signature, public_key)
+    print(f"Signature verified: {verified}")
 
 if __name__ == "__main__":
     main()
