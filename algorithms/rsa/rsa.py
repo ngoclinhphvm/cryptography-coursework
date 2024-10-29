@@ -49,3 +49,32 @@ def decrypt(ciphertext, private_key):
     """
     d, n = private_key
     return pow(ciphertext, d, n)
+
+def sign(message, private_key):
+    """
+    Sign a message using the private key.
+    
+    Args:
+        message (int): Message to sign
+        private_key ((int, int)): Private key
+    
+    Returns:
+        int: Signature
+    """
+    d, n = private_key
+    return pow(message, d, n)
+
+def verify(message, signature, public_key):
+    """
+    Verify a signature using the public key.
+    
+    Args:
+        message (int): Message to verify
+        signature (int): Signature
+        public_key ((int, int)): Public key
+    
+    Returns:
+        bool: True if the signature is valid, False otherwise
+    """
+    e, n = public_key
+    return message == pow(signature, e, n)
