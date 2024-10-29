@@ -1,4 +1,5 @@
 import math
+from number_theory import prime_generation as pg
 
 def gcd(a, b):
     """
@@ -87,3 +88,87 @@ def jacobi_symbol(a, n):
         return result
     else:
         return 0
+    
+def prime_factors(n):
+    """
+    Returns the prime factors of n.
+    """
+    factors = []
+    while n % 2 == 0:
+        factors.append(2)
+        n //= 2
+    
+    for i in range(3, math.isqrt(n) + 1, 2):
+        while n % i == 0:
+            factors.append(i)
+            n //= i
+    
+    if n > 2:
+        factors.append(n)
+    
+    return factors
+
+def is_primitive_element(alpha, p):
+    """
+    Determines if alpha is a primitive element modulo p.
+    """
+    assert p > 2, "p must be greater than 2"
+    assert pg.miller_rabin_test(p), "p must be a prime number"
+    
+    p1 = p - 1
+    prime_factors_p1 = prime_factors(p1)
+    for factor in prime_factors_p1:
+        if pow(alpha, p1 // factor, p) == 1:
+            return False
+    return True
+
+def smallest_primitive_element(p):
+    """
+    Returns a primitive element modulo p.
+    """
+    for i in range(2, p):
+        if is_primitive_element(i, p):
+            return i
+    raise ValueError("No primitive element found")    
+
+def mod_sqrt(a, p):
+    """Find modular square root if it exists"""
+    if legendre_symbol(a, p) != 1:
+        return None
+    elif a == 0:
+        return 0
+    elif p % 4 == 3:
+        return pow(a, (p + 1) // 4, p)
+    
+    # For p % 4 == 1, implement Tonelli-Shanks algorithm
+    q = p - 1
+    s = 0
+    while q % 2 == 0:
+        q //= 2
+        s += 1
+    
+    z = 2
+    while legendre_symbol(z, p) != -1:
+        z += 1
+    
+    m = s
+    c = pow(z, q, p)
+    t = pow(a, q, p)
+    r = pow(a, (q + 1) // 2, p)
+    
+    while t != 1:
+        i = 0
+        temp = t
+        while temp != 1:
+            temp = (temp * temp) % p
+            i += 1
+            if i == m:
+                return None
+        
+        b = pow(c, pow(2, m - i - 1), p)
+        m = i
+        c = (b * b) % p
+        t = (t * c) % p
+        r = (r * b) % p
+    
+    return r
